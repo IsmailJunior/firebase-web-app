@@ -1,6 +1,18 @@
-function App() {
+import Layout from "./Layout/Layout";
+import HomePage from "./pages/HomePage";
+import AdminPage from "./pages/AdminPage";
+import AuthPage from "./pages/AuthPage";
+import { Route, Switch } from "react-router-dom";
+const App = () =>
+{
   return (
-   <h1>Hello World</h1>
+    <Layout>
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/admin"  component={AdminPage} />
+        <Route path="/auth"  component={AuthPage} />
+      </Switch>
+    </Layout>
   );
 }
 
