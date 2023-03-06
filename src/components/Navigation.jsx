@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Container, Nav, Navbar } from "react-bootstrap";
-import { useContext } from "react";
+import { Container, Nav, Navbar,Button } from "react-bootstrap";
+import { useContext, useEffect } from "react";
 import UserContext from "../userContext";
 import styled from "styled-components";
 
@@ -9,7 +9,12 @@ const NavItem = styled.h5`
 `;
 const Navigation = () =>
 {
-  const UserContextProvider = useContext( UserContext );
+    const UserContextProvider = useContext( UserContext );
+  useEffect( () =>
+  {
+    UserContextProvider.setToken( UserContextProvider.Cookies.getItem( "token" ) );
+		UserContextProvider.setUser( UserContextProvider.Cookies.getItem( "username" ) );
+  }, [UserContextProvider])
   return (
    <Navbar className="shadow-lg mb-5" bg="light" expand="lg">
       <Container fluid="md">
@@ -23,10 +28,15 @@ const Navigation = () =>
               <Link to="/admin">
               <NavItem>Admin</NavItem>
             </Link>
-          : null}
+              : null }
+            { !UserContextProvider.token ? 
             <Link to="/auth">
-              <NavItem>Auth</NavItem>
+              <NavItem>Login</NavItem>
             </Link>
+            : null}
+            { UserContextProvider.token ?
+              <Button  variant="none" onClick={UserContextProvider.logout}>Logout</Button>
+          : null}
           </Nav>
         </Navbar.Collapse>
       </Container>
