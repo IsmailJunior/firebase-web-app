@@ -1,16 +1,34 @@
 import { Form, Col, Row, Button } from "react-bootstrap";
 import UserContext from "../userContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const AuthPage = () =>
 {	
-	const [switchAuth, setSwitchAuth] = useState(true)
+	const [switchAuth, setSwitchAuth] = useState(null)
 	const UserContextProvider = useContext( UserContext );
 
+	const switchPage = () => 
+	{
+		if ( !switchAuth )
+		{
+		UserContextProvider.Cookies.setItem( "longUser", "20%20" );
+		setSwitchAuth(UserContextProvider.Cookies.getItem("longUser"))
+		} else
+		{
+		UserContextProvider.Cookies.removeItem( "longUser" );
+		setSwitchAuth(null)
+		}
+	}
+
+	useEffect( () =>
+	{
+		setSwitchAuth( UserContextProvider.Cookies.getItem( "longUser" ) );
+	}, [])
 	return (
 		<Form>
 			{ UserContextProvider.token ?
-				<h1>Weclome { UserContextProvider.user }</h1>
+				<Navigate to="/" />
 				: null }
 			<Row className="justify-content-md-center">
 				<Col xs lg={4}>
@@ -39,10 +57,10 @@ const AuthPage = () =>
 					</div>
 					{ switchAuth ?
 					<div className="d-flex align-items-center mt-4 gap-2">
-						<h5>Don't have account?</h5> <Button variant="none" onClick={e => setSwitchAuth(false)}>Register</Button>
+						<h5>Don't have account?</h5> <Button variant="none" onClick={switchPage}>Register</Button>
 					</div>
 				: 	<div className="d-flex align-items-center mt-4 gap-2">
-						<h5>Have account?</h5> <Button variant="none" onClick={e => setSwitchAuth(true)}>Login</Button>
+						<h5>Have account?</h5> <Button variant="none" onClick={switchPage}>Login</Button>
 						</div> }
 				</Col>
 			</Row>

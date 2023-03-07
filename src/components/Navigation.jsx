@@ -13,7 +13,8 @@ const Navigation = () =>
   useEffect( () =>
   {
     UserContextProvider.setToken( UserContextProvider.Cookies.getItem( "token" ) );
-		UserContextProvider.setUser( UserContextProvider.Cookies.getItem( "username" ) );
+    UserContextProvider.setUser( UserContextProvider.Cookies.getItem( "username" ) );
+    UserContextProvider.setLongUser( UserContextProvider.Cookies.getItem( "longUser" ) );
   }, [UserContextProvider])
   return (
    <Navbar className="shadow-lg mb-5" bg="light" expand="lg">
@@ -29,14 +30,24 @@ const Navigation = () =>
               <NavItem>Admin</NavItem>
             </Link>
               : null }
-            { !UserContextProvider.token ? 
+            { !UserContextProvider.token && UserContextProvider.longUser ? 
             <Link to="/auth">
               <NavItem>Login</NavItem>
             </Link>
-            : null}
+              : null }
+            { !UserContextProvider.token && !UserContextProvider.longUser ? 
+            <Link to="/auth">
+              <NavItem>Register</NavItem>
+            </Link>
+              : null }
+              { UserContextProvider.token ?
+              <Link to="/create-doctor">
+              <NavItem>Create Doctor</NavItem>
+            </Link>
+              : null }
             { UserContextProvider.token ?
               <Button  variant="none" onClick={UserContextProvider.logout}>Logout</Button>
-          : null}
+              : null }
           </Nav>
         </Navbar.Collapse>
       </Container>

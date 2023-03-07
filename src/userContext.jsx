@@ -7,6 +7,7 @@ const UserContext = createContext( null );
 export const UserContextProvider = ( { children } ) =>
 {
 	const [ token, setToken ] = useState( null );
+	const [ longUser, setLongUser ] = useState( null );
 	const [ user, setUser ] = useState( null );
 	const usernameRef = useRef("");
 	const passwordRef = useRef( "" );
@@ -26,11 +27,15 @@ export const UserContextProvider = ( { children } ) =>
 	{
 		console.log( Cookies.getItem( "token" ) );
 		Cookies.setItem( "token", res.data.token );
+		Cookies.setItem( "longUser", "20%20" );
 		setToken( Cookies.getItem( "token" ) );
 		if ( usernameRef.current.value !== null )
 		{
 			Cookies.setItem( "username", usernameRef.current.value );
 			setUser( Cookies.getItem( "username" ) );
+			setLongUser( Cookies.getItem( "longUser" ) );
+			usernameRef.current.value = null;
+			passwordRef.current.value = null;
 		}
 	} )
 	}
@@ -56,6 +61,8 @@ export const UserContextProvider = ( { children } ) =>
 		{
 			Cookies.setItem( "username", usernameRef.current.value );
 			setUser( Cookies.getItem( "username" ) );
+			usernameRef.current.value = null;
+			passwordRef.current.value = null;
 		}
 	} )
 	}
@@ -85,6 +92,8 @@ export const UserContextProvider = ( { children } ) =>
 		setToken,
 		setUser,
 		user,
+		setLongUser,
+		longUser,
 		Cookies
 	}
 	
