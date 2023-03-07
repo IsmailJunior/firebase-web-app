@@ -6,6 +6,7 @@ import axios from "axios";
 export const DoctorContextProvider = ( { children } ) =>
 {
 	const [ isPostingComplete, setIsPostingComplete ] = useState( false );
+	const [ reload, setReload ] = useState();
 	const [doctors, setDoctors] = useState([])
 	const nameRef = useRef( "" );
 	const rankRef = useRef( "" );
@@ -41,14 +42,30 @@ export const DoctorContextProvider = ( { children } ) =>
 		})
 	}
 
+	const deleteDoctor = (id) =>
+	{
+		axios( {
+			method: "DELETE",
+			url: `/doctor/delete/${ id }`,
+			withCredentials: true
+		} ).then( ( res ) =>
+		{
+			console.log( res.data );
+			setReload(!reload)
+		})
+	}
+
 	const context = {
 		createDoctor,
 		getDoctors,
+		deleteDoctor,
 		doctors,
 		nameRef,
 		rankRef,
 		setIsPostingComplete,
-		isPostingComplete
+		isPostingComplete,
+		setReload,
+		reload
 	}
 	return (
 		<DoctorContext.Provider value={context}>

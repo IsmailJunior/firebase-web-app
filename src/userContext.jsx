@@ -40,7 +40,6 @@ export const UserContextProvider = ( { children } ) =>
 	} )
 	}
 
-
 	const login = (e) =>
 	{
 		 e.preventDefault();
