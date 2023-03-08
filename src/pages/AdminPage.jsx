@@ -1,6 +1,6 @@
 import DoctorContext from "../context/doctorContext";
 import { useContext, useEffect } from "react";
-import { Button, Badge, Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import Profiler from "../components/Profiler";
 
 const AdminPage = () =>

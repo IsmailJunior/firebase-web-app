@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { UserContextProvider } from "./context/userContext";
 import { DoctorContextProvider } from "./context/doctorContext";
 import { BrowserRouter as Router } from 'react-router-dom';
-
 import './index.css';
 import App from './App';
 
