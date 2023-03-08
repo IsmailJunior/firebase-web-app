@@ -1,9 +1,9 @@
+import DoctorsList from './features/doctor/DoctorsList.jsx';
+
 const App = () =>
 {
   return (
-    <div>
-      <h1>demo</h1>
-    </div>
+	<DoctorsList />
   );
 }
 
