@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { UserContextProvider } from "./userContext";
-import { DoctorContextProvider } from "./doctorContext";
+import { UserContextProvider } from "./context/userContext";
+import { DoctorContextProvider } from "./context/doctorContext";
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';

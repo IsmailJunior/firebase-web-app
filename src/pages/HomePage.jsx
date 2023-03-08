@@ -1,5 +1,7 @@
 import { useContext, useEffect } from "react";
-import DoctorContext from "../doctorContext";
+import DoctorContext from "../context/doctorContext";
+import Profiler from "../components/Profiler";
+import classes from "./Home.module.css";
 
 const HomePage = () =>
 {
@@ -14,8 +16,8 @@ const HomePage = () =>
 			{ DoctorContextProvider.doctors.map( ( doctor, i ) =>
 			{
 				return (
-					<div key={i}>
-						<h1>{ doctor.name } - {doctor.rank}</h1>
+					<div className={classes.info_section}>
+						<Profiler rank={doctor.rank} name={doctor.name} image={doctor.image} key={i}/>
 					</div>
 				)
 			})}

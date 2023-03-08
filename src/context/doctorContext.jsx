@@ -10,6 +10,7 @@ export const DoctorContextProvider = ( { children } ) =>
 	const [doctors, setDoctors] = useState([])
 	const nameRef = useRef( "" );
 	const rankRef = useRef( "" );
+	const imageRef = useRef( "" );
 	const createDoctor = (e) =>
 	{
 		e.preventDefault();
@@ -19,7 +20,8 @@ export const DoctorContextProvider = ( { children } ) =>
 			withCredentials: true,
 			data: {
 				name: nameRef.current.value,
-				rank: rankRef.current.value
+				rank: rankRef.current.value,
+				image: imageRef.current.value
 		}
 	} ).then( ( res ) =>
 	{
@@ -62,6 +64,7 @@ export const DoctorContextProvider = ( { children } ) =>
 		doctors,
 		nameRef,
 		rankRef,
+		imageRef,
 		setIsPostingComplete,
 		isPostingComplete,
 		setReload,

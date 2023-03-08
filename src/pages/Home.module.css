@@ -1,0 +1,7 @@
+.info_section:nth-child(2n) {
+	background-color: rgba(40, 40, 40, 0.7);
+}
+
+.info_section {
+	border-radius: 10px;
+}
