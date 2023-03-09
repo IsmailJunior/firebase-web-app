@@ -11,13 +11,14 @@ const doctorSlice = createSlice( {
 			{
 				state.unshift( action.payload );
 			},
-			prepare ( name, rank )
+			prepare ( name, rank, userId )
 			{
 				return {
 					payload: {
 						id: nanoid(),
 						name,
-						rank
+						rank,
+						userId
 					}
 				};
 			}
