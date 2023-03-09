@@ -1,7 +1,9 @@
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { selectAllDoctors } from './doctorSlice';
+
 const DoctorsList = () => {
 	
-	const doctors = useSelector((state) => state.doctors);
+	const doctors = useSelector(selectAllDoctors);
 
 	const renderDoctors = doctors.map((doctor, i) => (
 		<div key={i}>
@@ -18,4 +20,3 @@ return (
 };
 
 export default DoctorsList;
-

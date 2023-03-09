@@ -1,9 +1,12 @@
 import DoctorsList from './features/doctor/DoctorsList.jsx';
-
+import AddDoctorForm from './features/doctor/AddDoctorForm';
 const App = () =>
 {
   return (
-	<DoctorsList />
+    <div>
+      <AddDoctorForm />
+      <DoctorsList />
+    </div>
   );
 }
 
