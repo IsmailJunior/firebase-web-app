@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import DoctorsList from './features/doctor/components/DoctorsList.jsx';
-import Layout from './components/Layout';
+import Layout from './components/Layout/Layout';
 import SingleDotorPage from './features/doctor/components/SingleDoctorPage';
 import CreateDoctorForm from './features/doctor/components/CreateDoctorForm';
 const App = () =>
