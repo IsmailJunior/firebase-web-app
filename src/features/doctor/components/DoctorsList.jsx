@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { selectAllDoctors, getDoctorsStatus, getDoctorsError, fetchDoctors } from './doctorSlice';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { selectAllDoctors, getDoctorsStatus, getDoctorsError } from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
 
 const DoctorsList = () => {
@@ -8,16 +8,7 @@ const DoctorsList = () => {
 	const doctors = useSelector(selectAllDoctors);
 	const doctorsStatus = useSelector(getDoctorsStatus);
 	const doctorsError = useSelector(getDoctorsError);
-	const dispatch = useDispatch();
 
-	useEffect( () =>
-	{
-		if ( doctorsStatus === 'idle' )
-		{
-			dispatch( fetchDoctors() );
-		}
-	}, [doctorsStatus, dispatch])
-	
 	let content;
 	if ( doctorsStatus === 'loading' )
 	{
@@ -32,6 +23,9 @@ const DoctorsList = () => {
 
 return (
 	<div>
+		<Link to='/doctor/create-doctor'>
+			<h2>Create Doctor</h2>
+		</Link>
 		{content}
 	</div>
    )
