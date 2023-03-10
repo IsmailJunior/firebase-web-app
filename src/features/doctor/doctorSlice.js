@@ -1,10 +1,15 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import axios from 'axios';
-const initialState = {
-	doctors: [],
+
+const doctorAdapter = createEntityAdapter( {
+	selectId: ( doctor ) => doctor._id,
+	sortComparer: ( a, b ) => a.name.localeCompare( b.name ),
+} );
+
+const initialState = doctorAdapter.getInitialState( {
 	status: 'idle',
 	error: null
-}
+} );
 
 export const fetchDoctors = createAsyncThunk( 'doctors/fetchDoctors', async () =>
 {
@@ -64,7 +69,7 @@ const doctorSlice = createSlice( {
 				{
 					return doctor;
 				} );
-				state.doctors = state.doctors.concat( loaddedContent );
+				doctorAdapter.upsertMany( state, loaddedContent );
 			} )
 			.addCase( fetchDoctors.rejected, ( state, action ) =>
 			{
@@ -73,29 +78,21 @@ const doctorSlice = createSlice( {
 			} )
 			.addCase( addDoctor.fulfilled, ( state, action ) =>
 			{
-				console.log( action.payload );
-				state.doctors.push( action.payload );
+				doctorAdapter.addOne( state, action.payload );
 			} )
 			.addCase( deleteDoctor.fulfilled, ( state, action ) =>
 			{
 				const { id } = action.payload;
-				const doctors = state.doctors.filter( doctor =>
-				{
-					return doctor._id !== id;
-				} );
-				console.log( action.payload );
-				state.doctors = doctors;
+				doctorAdapter.removeOne( state, id );
 			} )
 	}
 });
+export const {
+	selectById: selectDoctorById,
+	selectIds: selectDoctorsIds,
+	selectAll: selectAllDoctors, } = doctorAdapter.getSelectors( state => state.doctors );
 
-export const selectAllDoctors = ( state ) => state.doctors.doctors;
 export const getDoctorsStatus = ( state ) => state.doctors.status;
 export const getDoctorsError = ( state ) => state.doctors.error;
-
-export const selectDoctorById = ( state, doctorId ) =>
-{
-	return state.doctors.doctors.find( doctor => doctor._id === doctorId );
-};
 
 export default doctorSlice.reducer;

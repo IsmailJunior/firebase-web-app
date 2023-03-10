@@ -15,7 +15,6 @@ const CreateDoctorForm = () =>
 	const onNameChanged = e => setName( e.target.value );
 	const onRankChanged = e => setRank( e.target.value );
 
-
 	const onSaveClicked = () =>
 	{
 		if (canSave)

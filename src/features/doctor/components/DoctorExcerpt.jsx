@@ -1,6 +1,9 @@
-import {Link} from 'react-router-dom'
-const DoctorExcerpt = ( { doctor } ) =>
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectDoctorById } from '../doctorSlice';
+const DoctorExcerpt = ( { doctorId } ) =>
 {
+	const doctor = useSelector( state => selectDoctorById( state, doctorId ) );
   return (
 	  <div>
 		  <Link to={`doctor/${doctor._id}`}>View Doctor</Link>
