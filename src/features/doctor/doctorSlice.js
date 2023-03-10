@@ -8,8 +8,14 @@ const initialState = {
 
 export const fetchDoctors = createAsyncThunk( 'doctors/fetchDoctors', async () =>
 {
-	const response = await axios.get( '/doctor/show-doctors' );
-	return [ ...response.data ];
+	try
+	{
+		const response = await axios.get( '/doctor/show-doctors' );
+		return [ ...response.data ];
+	} catch ( error )
+	{
+		console.log( error.message );
+	}
 } )
 
 const doctorSlice = createSlice( {
