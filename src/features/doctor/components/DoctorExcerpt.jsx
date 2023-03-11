@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import {Link} from 'react-router-dom';
 import { selectDoctorById } from '../doctorSlice';
 import { Badge } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -6,7 +7,12 @@ const Wraper = styled.div`
 	display: flex;
 	align-items: center;
 `
-
+	const Container = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+`
+	
 const Frame = styled.div`
 	width: 60px;
 	height: 60px;
@@ -20,22 +26,14 @@ const Profile = styled.img`
 `
 const Name = styled.h3`
 	margin: 0 40px;
-	color: white;
 `
-const DoctorExcerpt = ( { doctorId, className } ) =>
+const DoctorExcerpt = ( { doctorId } ) =>
 {
 
-	const Container = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 10px;
-	border-radius: 20px;
-`
-	
 	const doctor = useSelector( state => selectDoctorById( state, doctorId ) );
 	return (
-		<Container className={className}>
+		<Link to={`/doctor/${doctor._id}`}>
+		<Container>
 			<Wraper>
 		<Frame>
 				<Profile src={ doctor.image } />
@@ -43,7 +41,8 @@ const DoctorExcerpt = ( { doctorId, className } ) =>
 			<Name>{ doctor.name }</Name>
 			</Wraper>
 			<Badge>{doctor.rank}</Badge>
-	  </Container>
+			</Container>
+		</Link>
   )
 }
 

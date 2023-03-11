@@ -17,9 +17,9 @@ const DoctorsList = () => {
 	} else if ( doctorsStatus === 'succeeded' )
 	{
 		content = doctors.map( ( doctorId, i ) => (
-			<ListGroup.Item key={doctorId}>
-				<DoctorExcerpt doctorId={doctorId} className={classes.strip} />
-			</ListGroup.Item>
+			<div className={classes.strip} key={doctorId}>
+				<DoctorExcerpt doctorId={doctorId} />
+			</div>
 		))
 	} else if ( doctorsStatus === 'failed' )
 	{
@@ -27,11 +27,9 @@ const DoctorsList = () => {
 	}
 
 return (
-	<div>
-		<ListGroup>
+		<ListGroup className='p-3'>
 			{content}
 		</ListGroup>
-	</div>
    )
 };
 

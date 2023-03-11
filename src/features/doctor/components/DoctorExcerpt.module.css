@@ -1,3 +1,10 @@
-.strip:nth-of-type(2){
-	background-color: rgb(184, 17, 17);
+.strip:nth-of-type(2n) {
+	background-color: rgba(79, 79, 79, 0.324);
+}
+
+.strip {
+	border-radius: 20px;
+	background-color: #232323;
+	margin: 10px;
+	padding: 6px 50px;
 }
