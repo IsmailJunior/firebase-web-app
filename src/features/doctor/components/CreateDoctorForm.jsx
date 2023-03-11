@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
-import {addDoctor} from '../doctorSlice';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { addDoctor } from '../doctorSlice';
 
 const CreateDoctorForm = () =>
 {
@@ -40,14 +41,32 @@ const CreateDoctorForm = () =>
 	}
 
   return (
-	  <div>
-		  <form>
-			<input value={name} onChange={onNameChanged} type="text" placeholder="Name" name="name" />
-			  <input value={rank} onChange={onRankChanged} type="text" placeholder="Rank" name="rank" />
-			  <input value={image} onChange={onImageChanged} type="text" placeholder="Image" name="image" />
-			  <button disabled={!canSave} onClick={onSaveClicked} type="button">Save</button>
-		  </form>
-	</div>
+	  <Form as={Row} className='justify-content-md-center'>
+		  <Row className='justify-content-md-center'>
+			<Form.Group xs lg='4' as={Col} className='mb-3' controlId='name'>
+			  <Form.Label>Name</Form.Label>
+			  <Form.Control size='sm' onChange={onNameChanged} value={name} id='name' type='text' placeholder='Enter Name' />
+			  </Form.Group>
+		  </Row>
+		  <Row className='justify-content-md-center'>
+			<Form.Group xs lg='4' as={Col} className='mb-3' controlId='rank'>
+			  <Form.Label>Rank</Form.Label>
+			  <Form.Control size='sm' onChange={onRankChanged} value={rank} id='rank' type='text' placeholder='Enter Rank'/>
+		  	</Form.Group>
+		  </Row>
+
+		  <Row className='justify-content-md-center'>
+				<Form.Group xs lg='4' as={Col} className='mb-3' controlId='image'>
+			  <Form.Label>Image</Form.Label>
+			  <Form.Control size='sm' onChange={onImageChanged} value={image} id='image' type='text' placeholder='Enter Image' />
+		  </Form.Group>
+		  </Row>
+		  <Row className='justify-content-md-center'>
+			  <Col xs lg='4' className='d-grid' >
+				<Button size='sm' onClick={onSaveClicked} disabled={!canSave} variant='secondary' type='button'>Submit</Button>
+			  </Col>
+		  </Row>
+	</Form>
   )
 }
 
