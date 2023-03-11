@@ -1,0 +1,6 @@
+.control[type='text'], .control[type='password'] {
+	background-color: transparent;
+	color: white;
+	border: 1px #80808092 solid;
+}
+

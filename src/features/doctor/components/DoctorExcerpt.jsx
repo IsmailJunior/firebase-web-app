@@ -14,6 +14,7 @@ const Wraper = styled.div`
 `
 	
 const Frame = styled.div`
+	min-width: 60px;
 	width: 60px;
 	height: 60px;
 	border-radius: 50%;
@@ -26,6 +27,7 @@ const Profile = styled.img`
 `
 const Name = styled.h3`
 	margin: 0 40px;
+	font-size: 1em;
 `
 const DoctorExcerpt = ( { doctorId } ) =>
 {
@@ -40,7 +42,8 @@ const DoctorExcerpt = ( { doctorId } ) =>
 		</Frame>
 			<Name>{ doctor.name }</Name>
 			</Wraper>
-			<Badge>{doctor.rank}</Badge>
+				
+			<h4><Badge>{doctor.rank}</Badge></h4>
 			</Container>
 		</Link>
   )

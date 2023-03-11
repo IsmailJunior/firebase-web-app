@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Row} from 'react-bootstrap';
 import { addDoctor } from '../doctorSlice';
-import Control from './Control';
+import Control from '../../components/Control';
+import Submit from '../../components/Submit';
 
 const CreateDoctorForm = () =>
 {
@@ -54,11 +55,7 @@ const CreateDoctorForm = () =>
   return (
 	  <Form as={Row} className='justify-content-md-center'>
 		  { controls }
-		<Row className='justify-content-md-center'>
-			  <Col xs lg='4' className='d-grid' >
-				<Button size='sm' onClick={onSaveClicked} disabled={!canSave} variant='secondary' type='button'>Submit</Button>
-			  </Col>
-		  </Row>
+		<Submit func={onSaveClicked} disabled={!canSave}>Save</Submit>
 	</Form>
   )
 }
