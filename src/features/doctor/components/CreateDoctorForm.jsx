@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { addDoctor } from '../doctorSlice';
+import Control from './Control';
 
 const CreateDoctorForm = () =>
 {
@@ -40,28 +41,20 @@ const CreateDoctorForm = () =>
 		}
 	}
 
+	const controlSeed = [
+		{name: 'Name', func: onNameChanged, value: name, placeholder: 'Enter Name', id: 'name'},
+		{name: 'Rank', func: onRankChanged, value: rank, placeholder: 'Enter Rank', id: 'rank'},
+		{name: 'Image', func: onImageChanged, value: image, placeholder: 'Enter Image', id: 'image'},
+	]
+
+	const controls = controlSeed.map( ( control ) => (
+		<Control key={control.id} name={control.name} func={control.func} placeholder={control.placeholder} id={control.id} />
+	))
+
   return (
 	  <Form as={Row} className='justify-content-md-center'>
-		  <Row className='justify-content-md-center'>
-			<Form.Group xs lg='4' as={Col} className='mb-3' controlId='name'>
-			  <Form.Label>Name</Form.Label>
-			  <Form.Control size='sm' onChange={onNameChanged} value={name} id='name' type='text' placeholder='Enter Name' />
-			  </Form.Group>
-		  </Row>
-		  <Row className='justify-content-md-center'>
-			<Form.Group xs lg='4' as={Col} className='mb-3' controlId='rank'>
-			  <Form.Label>Rank</Form.Label>
-			  <Form.Control size='sm' onChange={onRankChanged} value={rank} id='rank' type='text' placeholder='Enter Rank'/>
-		  	</Form.Group>
-		  </Row>
-
-		  <Row className='justify-content-md-center'>
-				<Form.Group xs lg='4' as={Col} className='mb-3' controlId='image'>
-			  <Form.Label>Image</Form.Label>
-			  <Form.Control size='sm' onChange={onImageChanged} value={image} id='image' type='text' placeholder='Enter Image' />
-		  </Form.Group>
-		  </Row>
-		  <Row className='justify-content-md-center'>
+		  { controls }
+		<Row className='justify-content-md-center'>
 			  <Col xs lg='4' className='d-grid' >
 				<Button size='sm' onClick={onSaveClicked} disabled={!canSave} variant='secondary' type='button'>Submit</Button>
 			  </Col>
