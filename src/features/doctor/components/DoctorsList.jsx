@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { selectDoctorsIds, getDoctorsStatus, getDoctorsError } from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
-import {ListGroup} from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import classes from './DoctorExcerpt.module.css';
 
 const DoctorsList = () => {
 	
@@ -17,7 +18,7 @@ const DoctorsList = () => {
 	{
 		content = doctors.map( ( doctorId, i ) => (
 			<ListGroup.Item key={doctorId}>
-				<DoctorExcerpt doctorId={doctorId} />
+				<DoctorExcerpt doctorId={doctorId} className={classes.strip} />
 			</ListGroup.Item>
 		))
 	} else if ( doctorsStatus === 'failed' )
