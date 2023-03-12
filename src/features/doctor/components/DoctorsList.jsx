@@ -8,7 +8,7 @@ const DoctorsList = () => {
 	
 	const doctors = useSelector( selectDoctorsIds );
 	const doctorsStatus = useSelector(getDoctorsStatus);
-	const doctorsError = useSelector(getDoctorsError);
+	const doctorsError = useSelector( getDoctorsError );
 
 	let content;
 	if ( doctorsStatus === 'loading' )
