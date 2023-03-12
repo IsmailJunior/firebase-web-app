@@ -1,6 +1,6 @@
 import {useGetDoctorsQuery} from '../../api/doctorsApi';
 import DoctorExcerpt from './DoctorExcerpt';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Badge } from 'react-bootstrap';
 import classes from './DoctorExcerpt.module.css';
 
 const DoctorsList = () => {
@@ -9,7 +9,9 @@ const DoctorsList = () => {
 	const { data: doctors } = useGetDoctorsQuery();
 
 	let content = doctors?.map( ( doctor ) => (
-		<DoctorExcerpt doctor={doctor}/>
+		<div className={ classes.strip } key={ doctor._id }>
+			<DoctorExcerpt doctor={doctor}/>
+		</div>
 	))
 return (
 	<ListGroup className='p-3'>

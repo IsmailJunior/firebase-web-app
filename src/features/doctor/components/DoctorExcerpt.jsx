@@ -1,5 +1,4 @@
 import {useDeleteDoctorMutation} from '../../api/doctorsApi';
-import { Link } from 'react-router-dom';
 import { Badge, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 const Wraper = styled.div`
@@ -37,19 +36,17 @@ const DoctorExcerpt = ( { doctor } ) =>
 		deleteDoctor( { id: doctor._id } );
 	}
 	return (
-		<Link to={`/doctor/${doctor._id}`}>
 		<Container>
 			<Wraper>
 		<Frame>
 				<Profile src={doctor.image} />
 		</Frame>
-			<Name>{doctor.name}</Name>
+				<Name>{ doctor.name }</Name>
+				<h4><Badge>{ doctor.rank }</Badge></h4>
 			</Wraper>
 				
-				<h4><Badge>{ doctor.rank }</Badge></h4>
 				<Button variant='danger' onClick={onDeleteClicked}>Delete</Button>
 			</Container>
-		</Link>
   )
 }
 
