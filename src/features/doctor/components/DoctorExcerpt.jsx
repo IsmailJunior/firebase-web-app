@@ -1,7 +1,6 @@
-import { useSelector } from 'react-redux';
-import {Link} from 'react-router-dom';
-import { selectDoctorById } from '../doctorSlice';
-import { Badge } from 'react-bootstrap';
+import {useDeleteDoctorMutation} from '../../api/doctorsApi';
+import { Link } from 'react-router-dom';
+import { Badge, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 const Wraper = styled.div`
 	display: flex;
@@ -29,21 +28,26 @@ const Name = styled.h3`
 	margin: 0 40px;
 	font-size: 1em;
 `
-const DoctorExcerpt = ( { doctorId } ) =>
+const DoctorExcerpt = ( { doctor } ) =>
 {
-
-	const doctor = useSelector( state => selectDoctorById( state, doctorId ) );
+	const [ deleteDoctor ] = useDeleteDoctorMutation();
+	const onDeleteClicked = (e) =>
+	{
+		e.preventDefault();
+		deleteDoctor( { id: doctor._id } );
+	}
 	return (
 		<Link to={`/doctor/${doctor._id}`}>
 		<Container>
 			<Wraper>
 		<Frame>
-				<Profile src={ doctor.image } />
+				<Profile src={doctor.image} />
 		</Frame>
-			<Name>{ doctor.name }</Name>
+			<Name>{doctor.name}</Name>
 			</Wraper>
 				
-			<h4><Badge>{doctor.rank}</Badge></h4>
+				<h4><Badge>{ doctor.rank }</Badge></h4>
+				<Button variant='danger' onClick={onDeleteClicked}>Delete</Button>
 			</Container>
 		</Link>
   )

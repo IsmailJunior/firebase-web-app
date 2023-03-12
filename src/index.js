@@ -2,20 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import {store} from './app/store.js';
-import { Provider } from 'react-redux';
-import { fetchDoctors } from './features/doctor/doctorSlice';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-store.dispatch( fetchDoctors() );
+import { ApiProvider } from '@reduxjs/toolkit/query/react';
+import { doctorsApi } from './features/api/doctorsApi';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={ store }>
+  <ApiProvider api={ doctorsApi }>
     <Router>
       <Routes>
         <Route path='/*' element={ <App /> } />
       </Routes>
     </Router>
-  </Provider>
+  </ApiProvider>
 );
