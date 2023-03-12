@@ -1,4 +1,5 @@
 import { useAddDoctorMutation } from '../../api/doctorsApi';
+import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import { Form, Row } from 'react-bootstrap';
 import Control from '../../components/Control';
@@ -6,22 +7,34 @@ import Submit from '../../components/Submit';
 
 const CreateDoctorForm = () =>
 {
+	const navigate = useNavigate();
 	const [ name, setName ] = useState( '' );
 	const [ rank, setRank ] = useState( '' );
 	const [ image, setImage ] = useState( '' );
 
+	const onNameChanged = e => setName( e.target.value );
+	const onRankChanged = e => setRank( e.target.value );
+	const onImageChanged = e => setImage( e.target.value );
 	const [ addDoctor ] = useAddDoctorMutation();
+	const canSave = [name, rank, image].every(Boolean)
 
 	const onSaveClicked = ( e ) =>
 	{
 		e.preventDefault();
-		addDoctor({})
+		if ( canSave )
+		{
+		addDoctor( { name: name, rank: rank, image: image } );
+		setName( '' );
+		setRank( '' );
+		setImage( '' );
+		navigate( '/' );
+		}
 	}
 
 	const controlSeed = [
-		{name: 'Name', func: null, value: null, placeholder: 'Enter Name', id: 'name'},
-		{name: 'Rank', func: null, value: null, placeholder: 'Enter Rank', id: 'rank'},
-		{name: 'Image', func: null, value: null, placeholder: 'Enter Image', id: 'image'},
+		{name: 'Name', func: onNameChanged, value: name, placeholder: 'Enter Name', id: 'name'},
+		{name: 'Rank', func: onRankChanged, value: rank, placeholder: 'Enter Rank', id: 'rank'},
+		{name: 'Image', func: onImageChanged, value: image, placeholder: 'Enter Image', id: 'image'},
 	]
 
 	const controls = controlSeed.map( ( control ) => (
@@ -30,8 +43,8 @@ const CreateDoctorForm = () =>
 
   return (
 	  <Form as={Row} className='justify-content-md-center'>
-		  {null}
-		<Submit func={null} disabled={null}>Save</Submit>
+		  {controls}
+		<Submit func={onSaveClicked} disabled={!canSave}>Save</Submit>
 	</Form>
   )
 }

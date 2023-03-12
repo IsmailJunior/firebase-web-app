@@ -14,7 +14,7 @@ const DoctorsList = () => {
 return (
 	<ListGroup className='p-3'>
 		{content}
-		</ListGroup>
+	</ListGroup>
    )
 };
 
