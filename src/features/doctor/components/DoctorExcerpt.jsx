@@ -1,4 +1,3 @@
-import {useDeleteDoctorMutation} from '../../api/doctorsApi';
 import { Badge, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 const Wraper = styled.div`
@@ -56,11 +55,9 @@ const Name = styled.h3`
 `
 const DoctorExcerpt = ( { doctor } ) =>
 {
-	const [ deleteDoctor ] = useDeleteDoctorMutation();
 	const onDeleteClicked = (e) =>
 	{
 		e.preventDefault();
-		deleteDoctor( { id: doctor._id } );
 	}
 	return (
 		<Container>

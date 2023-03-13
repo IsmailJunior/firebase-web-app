@@ -1,4 +1,3 @@
-import { useAddDoctorMutation } from '../../api/doctorsApi';
 import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import { Form, Row } from 'react-bootstrap';
@@ -15,7 +14,6 @@ const CreateDoctorForm = () =>
 	const onNameChanged = e => setName( e.target.value );
 	const onRankChanged = e => setRank( e.target.value );
 	const onImageChanged = e => setImage( e.target.value );
-	const [ addDoctor ] = useAddDoctorMutation();
 	const canSave = [name, rank, image].every(Boolean)
 
 	const onSaveClicked = ( e ) =>
@@ -23,8 +21,6 @@ const CreateDoctorForm = () =>
 		e.preventDefault();
 		if ( canSave )
 		{
-		addDoctor( { name: name, rank: rank, image: image } );
-		console.log(image)
 		setName( '' );
 		setRank( '' );
 		setImage( '' );
@@ -45,7 +41,7 @@ const CreateDoctorForm = () =>
   return (
 	  <Form as={ Row } className='justify-content-md-center'>
 		  {controls}
-		<Submit func={onSaveClicked} >Save</Submit>
+		<Submit func={onSaveClicked} disabled={!canSave}>Save</Submit>
 	</Form>
   )
 }

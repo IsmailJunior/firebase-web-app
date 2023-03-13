@@ -15,6 +15,9 @@ const Navigation = () => {
 						<Link to='/doctor/create-doctor'>
 						  <Nav>Create Doctor</Nav>
 					  </Link>
+					<Link to='/auth'>
+						  <Nav>Authentication</Nav>
+					  </Link>
 				  </Nav>
 			  </Navbar.Collapse>
 	</Container>
