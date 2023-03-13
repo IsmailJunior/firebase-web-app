@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { useSelector  } from 'react-redux';
-import {getDoctors, selectAllDoctors} from '../doctorSlice';
+import {selectAllDoctors} from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
 import { ListGroup } from 'react-bootstrap';
 import classes from './DoctorExcerpt.module.css';
@@ -10,15 +9,17 @@ const DoctorsList = () => {
 
 	const doctors = useSelector(selectAllDoctors);
 
-return (
-	<div className='p-3 d-flex'>
-		<h1>Firebase <IoLogoFirebase color='orange' /></h1>
-		<div>
-			{ doctors?.map( ( doctor, i ) => (
-				<h1 key={i}>{doctor.name}</h1>
-			))}
+		let content;
+		content = doctors?.map( ( doctor ) => (
+		<div className={ classes.strip } key={ doctor.id }>
+			<DoctorExcerpt doctor={doctor}/>
 		</div>
-	</div>
+	))	
+return (
+	<ListGroup className='p-3'>
+		<h1>Powered By Firebase <IoLogoFirebase color='orange' /></h1>
+		{content}
+	</ListGroup>
    )
 };
 
