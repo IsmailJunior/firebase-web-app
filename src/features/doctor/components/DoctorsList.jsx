@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import {getDoctors} from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
 import { ListGroup } from 'react-bootstrap';
 import classes from './DoctorExcerpt.module.css';
@@ -5,6 +8,12 @@ import {IoLogoFirebase} from 'react-icons/io5'
 
 const DoctorsList = () => {
 
+	const dispatch = useDispatch();
+	const [ doctors, setDoctors ] = useState( [] );
+	useEffect( () =>
+	{
+		dispatch( getDoctors() );
+	}, [dispatch])
 return (
 	<div className='p-3 d-flex'>
 		<h1>Firebase <IoLogoFirebase color='orange'/></h1>
