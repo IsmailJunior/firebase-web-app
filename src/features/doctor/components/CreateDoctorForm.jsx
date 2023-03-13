@@ -24,6 +24,7 @@ const CreateDoctorForm = () =>
 		if ( canSave )
 		{
 		addDoctor( { name: name, rank: rank, image: image } );
+		console.log(image)
 		setName( '' );
 		setRank( '' );
 		setImage( '' );
@@ -34,7 +35,7 @@ const CreateDoctorForm = () =>
 	const controlSeed = [
 		{name: 'Name', func: onNameChanged, value: name, placeholder: 'Enter Name', id: 'name'},
 		{name: 'Rank', func: onRankChanged, value: rank, placeholder: 'Enter Rank', id: 'rank'},
-		{name: 'Image', func: onImageChanged, value: image, placeholder: 'Enter Image', id: 'image'},
+		{name: 'image', func: onImageChanged, value: image, placeholder: 'Enter Image', id: 'image'},
 	]
 
 	const controls = controlSeed.map( ( control ) => (
@@ -42,9 +43,9 @@ const CreateDoctorForm = () =>
 	))
 
   return (
-	  <Form as={Row} className='justify-content-md-center'>
+	  <Form as={ Row } className='justify-content-md-center'>
 		  {controls}
-		<Submit func={onSaveClicked} disabled={!canSave}>Save</Submit>
+		<Submit func={onSaveClicked} >Save</Submit>
 	</Form>
   )
 }
