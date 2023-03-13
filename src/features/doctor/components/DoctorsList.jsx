@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector ,useDispatch } from 'react-redux';
+import { useSelector  } from 'react-redux';
 import {getDoctors, selectAllDoctors} from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
 import { ListGroup } from 'react-bootstrap';
@@ -8,15 +8,16 @@ import {IoLogoFirebase} from 'react-icons/io5'
 
 const DoctorsList = () => {
 
-	// const doctors = useSelector( selectAllDoctors );
-	const dispatch = useDispatch();
-	useEffect( () =>
-	{
-		dispatch( getDoctors() );
-	}, [dispatch])
+	const doctors = useSelector(selectAllDoctors);
+
 return (
 	<div className='p-3 d-flex'>
-		<h1>Firebase <IoLogoFirebase color='orange'/></h1>
+		<h1>Firebase <IoLogoFirebase color='orange' /></h1>
+		<div>
+			{ doctors?.map( ( doctor, i ) => (
+				<h1 key={i}>{doctor.name}</h1>
+			))}
+		</div>
 	</div>
    )
 };

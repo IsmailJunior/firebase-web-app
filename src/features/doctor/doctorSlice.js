@@ -3,10 +3,11 @@ import { store } from '../../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 
 const initialState = {
-	doctors: []
+	doctors: [],
+	status: 'idle'
 };
 
-export const getDoctors = createAsyncThunk( 'doctors/getDoctors', async () =>
+export const getDoctors = createAsyncThunk( 'doctor/getDoctors', async () =>
 {
 	const doctorsCollectionRef = collection( store, 'doctors' );
 	try
@@ -21,23 +22,22 @@ export const getDoctors = createAsyncThunk( 'doctors/getDoctors', async () =>
 } );
 
 const doctorSlice = createSlice( {
-	name: 'doctors',
+	name: 'doctor',
 	initialState,
 	reducers: {},
 	extraReducers ( builder )
 	{
 		builder
+			.addCase( getDoctors.pending, ( state, action ) =>
+			{
+				state.status = 'Loading';
+			} )
 			.addCase( getDoctors.fulfilled, ( state, action ) =>
 			{
-				const loadedContent = action.payload.map( ( doctor ) =>
-				{
-					const newDoctor = { ...doctor, id: doctor.id };
-					return newDoctor;
-				} );
-				console.log( loadedContent );
-				state.doctors = state.doctors.concat( loadedContent )
+				state.status = 'Success';
+				state.doctors = state.doctors.concat( action.payload );
 			} );
 	}
 } );
-
+export const selectAllDoctors = ( state ) => state.doctor.doctors;
 export default doctorSlice.reducer;

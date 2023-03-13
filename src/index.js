@@ -5,6 +5,9 @@ import App from './App';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { getDoctors } from './features/doctor/doctorSlice';
+
+store.dispatch( getDoctors() );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
