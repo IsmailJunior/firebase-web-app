@@ -1,10 +1,12 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import { store } from '../../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 
 const initialState = {
 	doctors: []
 };
+
+// const doctorsAdapter = createEntityAdapter( {} )
 
 export const getDoctors = createAsyncThunk( 'doctors/getDoctors', async () =>
 {
@@ -31,8 +33,14 @@ const doctorSlice = createSlice( {
 			.addCase( getDoctors.fulfilled, ( state, action ) =>
 			{
 				console.log( action.payload );
+				// const loddedContent = action.payload.map( ( doctor ) =>
+				// {
+				// 	return doctor;
+				// } );
+				// doctorsAdapter.upsertMany( loddedContent );
 			} );
 	}
 } );
 
+// export const { selectAll: selectAllDoctors } = doctorsAdapter.getSelectors( ( state ) => state.doctors );
 export default doctorSlice.reducer;

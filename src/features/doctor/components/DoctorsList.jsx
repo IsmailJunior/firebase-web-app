@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import {getDoctors} from '../doctorSlice';
+import { useEffect } from 'react';
+import { useSelector ,useDispatch } from 'react-redux';
+import {getDoctors, selectAllDoctors} from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
 import { ListGroup } from 'react-bootstrap';
 import classes from './DoctorExcerpt.module.css';
@@ -8,8 +8,8 @@ import {IoLogoFirebase} from 'react-icons/io5'
 
 const DoctorsList = () => {
 
+	// const doctors = useSelector( selectAllDoctors );
 	const dispatch = useDispatch();
-	const [ doctors, setDoctors ] = useState( [] );
 	useEffect( () =>
 	{
 		dispatch( getDoctors() );
