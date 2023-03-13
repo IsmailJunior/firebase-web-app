@@ -6,7 +6,8 @@ const initialState = {
 	doctors: []
 };
 
-// const doctorsAdapter = createEntityAdapter( {} )
+const doctorsAdapter = createEntityAdapter( {
+} )
 
 export const getDoctors = createAsyncThunk( 'doctors/getDoctors', async () =>
 {
@@ -33,14 +34,14 @@ const doctorSlice = createSlice( {
 			.addCase( getDoctors.fulfilled, ( state, action ) =>
 			{
 				console.log( action.payload );
-				// const loddedContent = action.payload.map( ( doctor ) =>
-				// {
-				// 	return doctor;
-				// } );
-				// doctorsAdapter.upsertMany( loddedContent );
+				const loddedContent = action.payload.map( ( doctor ) =>
+				{
+					return doctor;
+				} );
+				doctorsAdapter.upsertMany( state, loddedContent );
 			} );
 	}
 } );
 
-// export const { selectAll: selectAllDoctors } = doctorsAdapter.getSelectors( ( state ) => state.doctors );
+export const { selectIds: selectAllDoctorsIds, selectById: selectDoctorById, selectAll: selectAllDoctors } = doctorsAdapter.getSelectors( ( state ) => state.doctors );
 export default doctorSlice.reducer;
