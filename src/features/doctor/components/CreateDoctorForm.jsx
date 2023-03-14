@@ -1,11 +1,14 @@
 import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addDoctor } from '../doctorSlice';
 import { Form, Row } from 'react-bootstrap';
 import Control from '../../components/Control';
 import Submit from '../../components/Submit';
 
 const CreateDoctorForm = () =>
 {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [ name, setName ] = useState( '' );
 	const [ rank, setRank ] = useState( '' );
@@ -21,6 +24,7 @@ const CreateDoctorForm = () =>
 		e.preventDefault();
 		if ( canSave )
 		{
+			dispatch( addDoctor({name: name, rank: rank, image: image}) )
 		setName( '' );
 		setRank( '' );
 		setImage( '' );
@@ -35,7 +39,7 @@ const CreateDoctorForm = () =>
 	]
 
 	const controls = controlSeed.map( ( control ) => (
-		<Control key={control.id} name={control.name} func={control.func} placeholder={control.placeholder} id={control.id} />
+		<Control value={control.value} key={control.id} name={control.name} func={control.func} placeholder={control.placeholder} id={control.id} />
 	))
 
   return (

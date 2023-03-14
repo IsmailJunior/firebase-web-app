@@ -63,10 +63,10 @@ const DoctorExcerpt = ( { doctor } ) =>
 		<Container>
 			<Wraper>
 		<Frame>
-				<Profile src={doctor.image} />
+				<Profile src={doctor.newImage} />
 		</Frame>
-				<Name>{ doctor.name }</Name>
-				<h4><Badge>{ doctor.rank }</Badge></h4>
+				<Name>{ doctor.newName }</Name>
+				<h4><Badge>{ doctor.newRank }</Badge></h4>
 			</Wraper>
 				
 				<Button variant='danger' onClick={onDeleteClicked}>Delete</Button>
