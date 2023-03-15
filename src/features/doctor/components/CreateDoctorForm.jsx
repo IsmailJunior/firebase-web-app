@@ -26,7 +26,7 @@ const CreateDoctorForm = () =>
 		e.preventDefault();
 		if ( canSave )
 		{
-			dispatch( addDoctor({name: name, rank: rank, image, userId: auth?.currentUser?.uid}) )
+			dispatch( addDoctor({name: name, rank: rank, image}) )
 		setName( '' );
 		setRank( '' );
 		setImage( '' );

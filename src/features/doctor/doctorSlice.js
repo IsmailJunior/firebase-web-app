@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { store, storage } from '../../config/firebase';
-import { getDocs, collection, addDoc, getDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getDocs, collection, addDoc, getDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
-import { ref, uploadBytes, listAll } from 'firebase/storage';
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 
 const initialState = {
 	doctors: [],
@@ -24,14 +24,19 @@ export const getDoctors = createAsyncThunk( 'doctor/getDoctors', async () =>
 	}
 } );
 
-export const addDoctor = createAsyncThunk( 'doctor/addDoctor', async ( { name: newName, rank: newRank, image: newImage, userId: newUserId } ) =>
+export const addDoctor = createAsyncThunk( 'doctor/addDoctor', async ( { name: newName, rank: newRank, image: newImage } ) =>
 {
 	try
 	{
-		const fileRef = ref( storage, `files/${ newImage.name + nanoid() }` );
+		const docId = await addDoc( doctorsCollectionRef, { newName, newRank, imageUrl: 'temp' } );
+		const docRef = doc( store, 'doctors', docId.id, );
+		const fileRef = ref( storage, `files/${ docId.id }` );
 		await uploadBytes( fileRef, newImage );
-		const docId = await addDoc( doctorsCollectionRef, { newName, newRank } );
-		const docRef = doc( store, 'doctors', docId.id );
+		const imageListRef = ref( storage, 'files' );
+		const res = await listAll( imageListRef );
+		const item = res.items.find( ( item ) => item.name === docId.id );
+		const imageUrl = await getDownloadURL( item );
+		await updateDoc( docRef, { imageUrl: imageUrl } );
 		const doctor = await getDoc( docRef );
 		return { ...doctor.data(), id: docId.id };
 	} catch ( error )
@@ -62,9 +67,11 @@ const doctorSlice = createSlice( {
 			{
 				state.status = 'Success';
 				state.doctors = state.doctors.concat( action.payload );
+				console.log( state.doctors )
 			} )
 			.addCase( addDoctor.fulfilled, ( state, action ) =>
 			{
+				console.log( action.payload )
 				state.status = 'Success';
 				state.doctors = state.doctors.concat( action.payload );
 			} )
