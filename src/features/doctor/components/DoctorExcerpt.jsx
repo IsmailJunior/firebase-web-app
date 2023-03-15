@@ -1,6 +1,8 @@
-import { Badge, Button } from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteDoctor, selectStatus } from '../doctorSlice';
+import {useState} from 'react'
+import { BarLoader } from 'react-spinners';
 import styled from 'styled-components';
 const Wraper = styled.div`
 	display: flex;
@@ -57,13 +59,21 @@ const Name = styled.h3`
 `
 const DoctorExcerpt = ( { doctor } ) =>
 {
-	const status = useSelector(selectStatus)
+	const [ isClicked, setIsCkliced ] = useState( false );
+	const status = useSelector( selectStatus );
 	const dispatch = useDispatch();
+	let label = 'Delete';
 
 	const onDeleteClicked = (e) =>
 	{
+		setIsCkliced( true );
 		e.preventDefault();
 		dispatch(deleteDoctor(doctor.id))
+	}
+
+	if ( isClicked && status === 'loading-delete' )
+	{
+		label = <BarLoader color='white'/>
 	}
 	return (
 		<Container>
@@ -74,8 +84,7 @@ const DoctorExcerpt = ( { doctor } ) =>
 				<Name>{ doctor.newName }</Name>
 				<h4><Badge>{ doctor.newRank }</Badge></h4>
 			</Wraper>
-				
-				<Button variant='danger' onClick={onDeleteClicked}>Delete</Button>
+				<button style={{height: '40px', width: '100px'}} className='btn btn-danger d-flex justify-content-center align-items-center' onClick={onDeleteClicked}>{label}</button>
 			</Container>
   )
 }

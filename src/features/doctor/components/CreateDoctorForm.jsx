@@ -1,15 +1,13 @@
 import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addDoctor, selectStatus } from '../doctorSlice';
+import { useDispatch } from 'react-redux';
+import { addDoctor } from '../doctorSlice';
 import { Form, Row } from 'react-bootstrap';
 import Control from '../../components/Control';
 import Submit from '../../components/Submit';
-import {MoonLoader} from 'react-spinners'
 
 const CreateDoctorForm = () =>
 {
-	const status = useSelector(selectStatus)
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [ name, setName ] = useState( '' );
@@ -21,29 +19,16 @@ const CreateDoctorForm = () =>
 	const onImageChanged = e => setImage( e.target.files[0] );
 	const canSave = [name, rank, image].every(Boolean)
 
-	let label;
-
-	if ( status === 'success' )
-	{
-		label = 'Save';
-	} else if ( status === 'loading' )
-	{
-		label = 'Loading'
-	} else if ( status === 'idle' )
-	{
-		label = 'Idle'
-	}
-
 	const onSaveClicked = ( e ) =>
 	{
 		e.preventDefault();
 		if ( canSave )
 		{
-		dispatch( addDoctor({name: name, rank: rank, image}) )
+			dispatch( addDoctor({name: name, rank: rank, image}) )
 		setName( '' );
 		setRank( '' );
 		setImage( '' );
-		
+		navigate( '/' );
 		}
 	}
 
@@ -60,7 +45,7 @@ const CreateDoctorForm = () =>
   return (
 	  <Form as={ Row } className='justify-content-md-center'>
 		  {controls}
-		<Submit func={onSaveClicked} disabled={!canSave}>{label}</Submit>
+		<Submit func={onSaveClicked} disabled={!canSave}>Save</Submit>
 	</Form>
   )
 }

@@ -67,7 +67,7 @@ const doctorSlice = createSlice( {
 			} )
 			.addCase( getDoctors.fulfilled, ( state, action ) =>
 			{
-				state.status = 'success';
+				state.status = 'idle';
 				state.doctors = state.doctors.concat( action.payload );
 			} )
 			.addCase( addDoctor.pending, ( state, action ) =>
@@ -76,16 +76,16 @@ const doctorSlice = createSlice( {
 			} )
 			.addCase( addDoctor.fulfilled, ( state, action ) =>
 			{
-				state.status = 'success';
+				state.status = 'idle';
 				state.doctors = state.doctors.concat( action.payload );
 			} )
 			.addCase( deleteDoctor.pending, ( state, action ) =>
 			{
-				state.status = 'loading';
+				state.status = 'loading-delete';
 			} )
 			.addCase( deleteDoctor.fulfilled, ( state, action ) =>
 			{
-				state.status = 'success';
+				state.status = 'idle';
 				const doctors = state.doctors.filter( doctor => doctor.id !== action.payload );
 				state.doctors = [ ...doctors ];
 			} )
