@@ -1,25 +1,35 @@
 import { useSelector  } from 'react-redux';
-import {selectAllDoctors} from '../doctorSlice';
+import {selectAllDoctors, selectStatus} from '../doctorSlice';
 import DoctorExcerpt from './DoctorExcerpt';
-import { ListGroup } from 'react-bootstrap';
 import classes from './DoctorExcerpt.module.css';
-import {IoLogoFirebase} from 'react-icons/io5'
+import { MoonLoader } from 'react-spinners';
+import {Container} from 'react-bootstrap';
 
 const DoctorsList = () => {
 
-	const doctors = useSelector(selectAllDoctors);
+	const doctors = useSelector( selectAllDoctors );
+	const status = useSelector( selectStatus );
 
-		let content;
+	let content;
+	
+	if ( status === 'Loading' )
+	{
+		content = 
+			<Container className='d-flex flex-column align-items-center justify-content-center'>
+				<MoonLoader size={30} color='white' />
+			</Container>
+	} else
+	{
 		content = doctors?.map( ( doctor ) => (
 		<div className={ classes.strip } key={ doctor.id }>
 			<DoctorExcerpt doctor={doctor}/>
 		</div>
 	))	
-return (
-	<ListGroup className='p-3'>
-		<h1>Powered By Firebase <IoLogoFirebase color='orange' /></h1>
+	}
+	return (
+		<div>
 		{content}
-	</ListGroup>
+		</div>
    )
 };
 

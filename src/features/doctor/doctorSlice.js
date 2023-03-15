@@ -91,4 +91,5 @@ const doctorSlice = createSlice( {
 	}
 } );
 export const selectAllDoctors = ( state ) => state.doctor.doctors;
+export const selectStatus = ( state ) => state.doctor.status;
 export default doctorSlice.reducer;

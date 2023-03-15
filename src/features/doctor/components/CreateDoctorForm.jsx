@@ -5,8 +5,6 @@ import { addDoctor } from '../doctorSlice';
 import { Form, Row } from 'react-bootstrap';
 import Control from '../../components/Control';
 import Submit from '../../components/Submit';
-import { auth } from '../../../config/firebase';
-
 
 const CreateDoctorForm = () =>
 {
