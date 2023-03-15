@@ -63,28 +63,29 @@ const doctorSlice = createSlice( {
 		builder
 			.addCase( getDoctors.pending, ( state, action ) =>
 			{
-				state.status = 'Loading';
+				state.status = 'loading';
 			} )
 			.addCase( getDoctors.fulfilled, ( state, action ) =>
 			{
-				state.status = 'Success';
+				state.status = 'success';
 				state.doctors = state.doctors.concat( action.payload );
-				console.log( state.doctors )
+			} )
+			.addCase( addDoctor.pending, ( state, action ) =>
+			{
+				state.status = 'loading';
 			} )
 			.addCase( addDoctor.fulfilled, ( state, action ) =>
 			{
-				console.log( action.payload )
-				state.status = 'Success';
+				state.status = 'success';
 				state.doctors = state.doctors.concat( action.payload );
 			} )
 			.addCase( deleteDoctor.pending, ( state, action ) =>
 			{
-				state.status = 'Loading';
-				console.log( 'Loading' );
+				state.status = 'loading';
 			} )
 			.addCase( deleteDoctor.fulfilled, ( state, action ) =>
 			{
-				state.status = 'Success';
+				state.status = 'success';
 				const doctors = state.doctors.filter( doctor => doctor.id !== action.payload );
 				state.doctors = [ ...doctors ];
 			} )

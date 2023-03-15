@@ -1,6 +1,6 @@
 import { Badge, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { deleteDoctor } from '../doctorSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteDoctor, selectStatus } from '../doctorSlice';
 import styled from 'styled-components';
 const Wraper = styled.div`
 	display: flex;
@@ -57,7 +57,9 @@ const Name = styled.h3`
 `
 const DoctorExcerpt = ( { doctor } ) =>
 {
+	const status = useSelector(selectStatus)
 	const dispatch = useDispatch();
+
 	const onDeleteClicked = (e) =>
 	{
 		e.preventDefault();

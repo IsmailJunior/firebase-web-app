@@ -12,7 +12,7 @@ const DoctorsList = () => {
 
 	let content;
 	
-	if ( status === 'Loading' )
+	if ( status === 'loading' )
 	{
 		content = 
 			<Container className='d-flex flex-column align-items-center justify-content-center'>
