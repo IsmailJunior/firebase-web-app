@@ -5,6 +5,8 @@ import { addDoctor } from '../doctorSlice';
 import { Form, Row } from 'react-bootstrap';
 import Control from '../../components/Control';
 import Submit from '../../components/Submit';
+import { auth } from '../../../config/firebase';
+
 
 const CreateDoctorForm = () =>
 {
@@ -16,7 +18,7 @@ const CreateDoctorForm = () =>
 
 	const onNameChanged = e => setName( e.target.value );
 	const onRankChanged = e => setRank( e.target.value );
-	const onImageChanged = e => setImage( e.target.value );
+	const onImageChanged = e => setImage( e.target.files[0] );
 	const canSave = [name, rank, image].every(Boolean)
 
 	const onSaveClicked = ( e ) =>
@@ -24,7 +26,7 @@ const CreateDoctorForm = () =>
 		e.preventDefault();
 		if ( canSave )
 		{
-			dispatch( addDoctor({name: name, rank: rank, image: image}) )
+			dispatch( addDoctor({name: name, rank: rank, image, userId: auth?.currentUser?.uid}) )
 		setName( '' );
 		setRank( '' );
 		setImage( '' );
@@ -35,11 +37,11 @@ const CreateDoctorForm = () =>
 	const controlSeed = [
 		{name: 'Name', func: onNameChanged, value: name, placeholder: 'Enter Name', id: 'name'},
 		{name: 'Rank', func: onRankChanged, value: rank, placeholder: 'Enter Rank', id: 'rank'},
-		{name: 'image', func: onImageChanged, value: image, placeholder: 'Enter Image', id: 'image'},
+		{name: 'image', func: onImageChanged,  placeholder: 'Enter Image', id: 'image', type: 'file'},
 	]
 
 	const controls = controlSeed.map( ( control ) => (
-		<Control value={control.value} key={control.id} name={control.name} func={control.func} placeholder={control.placeholder} id={control.id} />
+		<Control type={control.type} value={control.value}  key={control.id} name={control.name} func={control.func} placeholder={control.placeholder} id={control.id} />
 	))
 
   return (

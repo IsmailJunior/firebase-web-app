@@ -1,10 +1,12 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { store } from '../../config/firebase';
+import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import { store, storage } from '../../config/firebase';
 import { getDocs, collection, addDoc, getDoc, doc, deleteDoc } from 'firebase/firestore';
+
+import { ref, uploadBytes, listAll } from 'firebase/storage';
 
 const initialState = {
 	doctors: [],
-	status: 'idle'
+	status: 'idle',
 };
 
 const doctorsCollectionRef = collection( store, 'doctors' );
@@ -22,11 +24,13 @@ export const getDoctors = createAsyncThunk( 'doctor/getDoctors', async () =>
 	}
 } );
 
-export const addDoctor = createAsyncThunk( 'doctor/addDoctor', async ( { name: newName, rank: newRank, image: newImage } ) =>
+export const addDoctor = createAsyncThunk( 'doctor/addDoctor', async ( { name: newName, rank: newRank, image: newImage, userId: newUserId } ) =>
 {
 	try
 	{
-		const docId = await addDoc( doctorsCollectionRef, { newName, newRank, newImage } );
+		const fileRef = ref( storage, `files/${ newImage.name + nanoid() }` );
+		await uploadBytes( fileRef, newImage );
+		const docId = await addDoc( doctorsCollectionRef, { newName, newRank } );
 		const docRef = doc( store, 'doctors', docId.id );
 		const doctor = await getDoc( docRef );
 		return { ...doctor.data(), id: docId.id };
@@ -67,7 +71,6 @@ const doctorSlice = createSlice( {
 			.addCase( deleteDoctor.pending, ( state, action ) =>
 			{
 				state.status = 'Loading';
-				// const doctor = state.doctor.doctors.find( ( doctor ) => doctor.id === action.payload );
 				console.log( 'Loading' );
 			} )
 			.addCase( deleteDoctor.fulfilled, ( state, action ) =>

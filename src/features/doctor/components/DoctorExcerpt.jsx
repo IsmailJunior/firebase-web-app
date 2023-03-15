@@ -67,7 +67,7 @@ const DoctorExcerpt = ( { doctor } ) =>
 		<Container>
 			<Wraper>
 		<Frame>
-				<Profile src={doctor.newImage} />
+				<Profile src='https://firebasestorage.googleapis.com/b/bucket/o/images%20stars.jpg' />
 		</Frame>
 				<Name>{ doctor.newName }</Name>
 				<h4><Badge>{ doctor.newRank }</Badge></h4>
