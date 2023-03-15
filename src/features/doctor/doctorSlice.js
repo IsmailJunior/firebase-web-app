@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { store, storage } from '../../config/firebase';
 import { getDocs, collection, addDoc, getDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
-import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 
 const initialState = {
 	doctors: [],
@@ -47,6 +47,8 @@ export const addDoctor = createAsyncThunk( 'doctor/addDoctor', async ( { name: n
 
 export const deleteDoctor = createAsyncThunk( 'doctor/deleteDoctor', async ( id ) =>
 {
+	const deleteRef = ref( storage, `files/${ id }` );
+	await deleteObject( deleteRef );
 	const docRef = doc( store, 'doctors', id );
 	await deleteDoc( docRef );
 	return id;
