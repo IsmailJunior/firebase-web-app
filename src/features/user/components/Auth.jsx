@@ -71,7 +71,7 @@ const Auth = () =>
 		  <Control func={onPasswordChanged} name='Password' placeholder='Password' type='password' value={password} />
 			<Submit func={ onSignUpClicked } disabled={ !canSave }>Sign Up</Submit>
 			<Submit func={ onLoginClicked } disabled={ !canSave }>Login</Submit>
-		  <Submit func={onLoginWithGoogleClicked}><IoLogoGoogle /> Login with Google</Submit>
+		  <Submit func={onLoginWithGoogleClicked}><IoLogoGoogle />Login with Google</Submit>
 		</div>
 		: <Submit func={onLogoutClicked}>Logout</Submit>
 	)
